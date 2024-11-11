@@ -1,21 +1,26 @@
 pipeline {
- agent any
- tools {
- maven 'maven-3.6.3'
- }
- stages {
- stage ('Build') {
- steps {
- sh 'mvn clean package'
- }
- }
- stage ('Deploy') {
- steps {
- script {
- deploy adapters: [tomcat9(credentialsId: 'tomcat_credential', path: '',
-url: 'http://dayal-test.letspractice.tk:8081')], contextPath: '/pipeline',
-onFailure: false, war: 'webapp/target/*.war'
- }
- }
- }
- }
+    agent any
+   
+    tools {
+        maven 'maven-3.6.3'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'mvn clean package'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    deploy adapters: [tomcat9(omayma: 'tomcat_credential', path: 'C:\Users\ETUDIANT\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Apache Tomcat 6.0 Tomcat6', url: 'http://dayal-test.letspractice.tk:8081')],
+                           contextPath: '/pipeline',
+                           onFailure: false,
+                           war: 'webapp/target/*.war'
+                }
+            }
+        }
+    }
+}
